@@ -1,4 +1,4 @@
-🏥 Hospital Management Automation with n8n
+# Hospital Management Automation with n8n
 
 An n8n-based hospital management automation prototype that automates appointment booking, medical-report OCR and analysis, doctor consultation reminders, and administrative analytics.
 
@@ -6,7 +6,7 @@ The project uses n8n as the workflow orchestration layer and integrates Google D
 
 Project type: Workflow Automation / AI Automation / Healthcare Operations PrototypeAutomation Platform: n8n
 
-📌 Overview
+# Overview
 
 This project contains four independent automation workflows:
 
@@ -20,7 +20,7 @@ Admin Management / Analytics — periodically analyzes stored appointment data, 
 
 The complete workflow documentation describes the triggers, inputs, processing logic, storage, external services, and outputs of each workflow. fileciteturn0file0L10-L21
 
-🏗️ System Architecture
+#  System Architecture
 
 
 
@@ -28,9 +28,9 @@ The architecture consists of modular n8n workflows connected to external service
 
 The project documentation represents the current system as four modular n8n automations connected to the project's actual external services and n8n Data Tables. fileciteturn0file0L186-L188
 
-🔄 Workflows
+ Workflows
 
-1. 📅 Appointment Booking
+1.  Appointment Booking
 
 Purpose:Automates the appointment-request process from patient data collection to availability checking, administrator approval, database insertion, and email confirmation.
 
@@ -76,7 +76,7 @@ Output: Booking confirmation or rejection email.
 
 The actual workflow uses an n8n Form Trigger, checks the hospital mangement Data Table for the requested date/time, requests administrator approval through Gmail, stores approved bookings, and sends confirmation. fileciteturn0file0L33-L46 fileciteturn0file0L50-L78
 
-2. 📄 OCR / Medical Report Analysis
+2.  OCR / Medical Report Analysis
 
 Purpose:Automatically processes newly uploaded medical-report files and converts OCR output into a structured report using Google Gemini.
 
@@ -120,7 +120,7 @@ Example structured output:
 
 fileciteturn0file0L113-L125
 
-3. 🔔 Doctor Consultation Reminder
+3.  Doctor Consultation Reminder
 
 Purpose:Records patients who require follow-up consultations and periodically checks stored records to send reminder emails.
 
@@ -156,7 +156,7 @@ Output: Doctor consultation reminder email.
 
 The consultation records contain Name, Gmail, consult_required, and Date. A scheduled process reads these records and checks the stored follow-up date before sending reminders. fileciteturn0file0L127-L152
 
-4. 📊 Admin Management / Analytics
+4.  Admin Management / Analytics
 
 Purpose:Generates periodic hospital-management analytics reports from stored appointment records.
 
@@ -176,7 +176,7 @@ Gmail Email
 
 The workflow calculates statistics such as total patients, booked appointments, and appointments not booked. Gemini then generates a short management report containing a summary, booking percentage, patients without appointments, and an administrative observation. fileciteturn0file0L155-L175
 
-🧰 Technology Stack
+ Technology Stack
 
 Layer
 
@@ -240,7 +240,7 @@ Periodic processing
 
 This stack is based on the supplied workflow documentation. fileciteturn0file0L22-L32
 
-🗃️ Data Storage
+ Data Storage
 
 Appointment Data
 
@@ -272,7 +272,7 @@ Date
 
 fileciteturn0file0L176-L179
 
-🔌 External Services
+External Services
 
 Service
 
@@ -296,7 +296,7 @@ Approval, confirmation, reminder and report emails
 
 fileciteturn0file0L180-L185
 
-📂 Suggested Repository Structure
+ Suggested Repository Structure
 
 hospital-management-n8n/
 │
@@ -317,7 +317,7 @@ hospital-management-n8n/
 
 Rename your exported n8n workflow JSON files according to your actual filenames. Do not commit credentials or API keys.
 
-⚙️ Setup
+ Setup
 
 1. Install / Run n8n
 
@@ -396,7 +396,7 @@ Consultation reminders
 
 Analytics reports
 
-🔐 Security
+ Security
 
 Do not publish API keys, credentials, passwords, or personal email addresses on GitHub.
 
@@ -439,7 +439,7 @@ __pycache__/
 .DS_Store
 Thumbs.db
 
-⚠️ Current Limitations
+ Current Limitations
 
 This is a prototype, not a production hospital-management system.
 
@@ -485,7 +485,7 @@ Separate development and production environments
 
 The supplied documentation lists these as recommended production improvements rather than features already present in the prototype. fileciteturn0file0L233-L245
 
-📈 Workflow Inventory
+ Workflow Inventory
 
 Workflow
 
@@ -539,7 +539,7 @@ Analytics email
 
 fileciteturn0file0L246-L253
 
-🎯 Project Goal
+ Project Goal
 
 The goal of this project is to automate repetitive hospital operations using workflow automation and AI:
 
@@ -547,13 +547,13 @@ Appointment Management + Medical Document OCR + Follow-up Reminders + Administra
 
 All four processes are orchestrated through n8n rather than being implemented as a traditional monolithic application. fileciteturn0file0L254-L259
 
-👨‍💻 Author
+ Author
 
 Swayam Sachdeva
 
 B.Tech CSE StudentABES College
 
-⭐ Acknowledgement
+ Acknowledgement
 
 Built as an n8n workflow automation project demonstrating the integration of forms, databases, APIs, OCR, generative AI, email automation, and scheduled workflows.
 
