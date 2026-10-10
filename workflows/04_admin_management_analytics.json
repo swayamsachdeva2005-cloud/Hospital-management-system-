@@ -1,0 +1,164 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "9a69cef0-b1b9-4bb7-909c-f1f355ff8d9b",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "J5gGPkeuUzpjYMfK",
+          "mode": "list",
+          "cachedResultName": "record",
+          "cachedResultUrl": "/projects/3doCwdxqxd9mFxfY/datatables/J5gGPkeuUzpjYMfK"
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "32a5c391-0d37-4a88-b4c5-1267c0f2517e",
+      "name": "Get row(s)"
+    },
+    {
+      "parameters": {
+        "jsCode": "const rows = $input.all();\n\nlet appointmentYes = 0;\nlet appointmentNo = 0;\n\nfor (const row of rows) {\n    const data = row.json;\n\n    if (data.appointment === \"yes\") {\n        appointmentYes++;\n    }\n\n    if (data.appointment === \"no\") {\n        appointmentNo++;\n    }\n}\n\nreturn [{\n    json: {\n        totalPatients: rows.length,\n        appointmentsBooked: appointmentYes,\n        appointmentsNotBooked: appointmentNo\n    }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "4e337c43-09d7-4cba-948a-7630cab1facf",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        496,
+        208
+      ],
+      "id": "fa5a8cb2-4d06-4e17-a5c8-8bcc9865292b",
+      "name": "Google Gemini Chat Model"
+    },
+    {
+      "parameters": {
+        "sendTo": "swayamsachdeva8@gmail.com",
+        "subject": "Hospital Analytics Report",
+        "message": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        976,
+        0
+      ],
+      "id": "b9aaf453-9a39-4cee-b5b2-8e8cf88ea6a6",
+      "name": "Send a message",
+      "webhookId": "1a3e73e5-c3a1-447b-ba64-1978e75a990b"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a hospital administration analytics assistant.\n\nCreate a short hospital management report using these statistics:\n\nTotal Patients: {{ $json.totalPatients }}\nAppointments Booked: {{ $json.appointmentsBooked }}\nAppointments Not Booked: {{ $json.appointmentsNotBooked }}\n\nGive:\n1. A short summary\n2. Appointment booking percentage\n3. Number of patients without appointments\n4. A short administrative observation\n\nDo not provide medical advice.",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        624,
+        0
+      ],
+      "id": "078f4a54-4ed1-4230-b2cd-cb600581a485",
+      "name": "AI Agent"
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "225e84146a2e7b31bf9ec24944a425f288e10ff296a6e9b5741a43ecf84e1652"
+  },
+  "name": "Hospital Management - Admin Management Analytics"
+}
